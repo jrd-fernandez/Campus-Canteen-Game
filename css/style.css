@@ -1960,7 +1960,7 @@ kbd {
     bottom: 0;
     left: 100%;
     width: calc(100% / 6);
-    transition: left 0.55s ease-in-out;
+    transition: left 1.5s linear;
     will-change: left;
 }
 

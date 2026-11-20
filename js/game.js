@@ -398,10 +398,8 @@ function moveCustomer(node, index) {
 
     // Stop walking after reaching the position
     node.walkingTimer = setTimeout(function () {
-
-        node.classList.remove("walking");
-
-    }, 550);
+    node.classList.remove("walking");
+    }, 1500);
 
 }
 
