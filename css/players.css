@@ -1,0 +1,36 @@
+/* Player selection: compatible with the existing Canteen Rush stylesheet. */
+#rushPlayerSelect { z-index: 210; }
+#rushPlayerSelect .rush-player-panel { max-width: 700px; text-align: center; }
+.rush-player-panel .rush-kicker { color: #d6b775; letter-spacing: 3px; font-size: 11px; margin-bottom: 12px; }
+.rush-player-panel h2 { margin-bottom: 8px; }
+.rush-player-panel .rush-intro { color: #c7d3b9; font-size: 13px; margin-bottom: 20px; }
+.rush-player-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin: 20px 0; }
+#rushPlayerSelect .rush-player-card { display: flex; flex-direction: column; align-items: center; min-width: 0; gap: 8px; padding: 10px 4px; border: 3px solid #a18b62; background: #eadeb9; color: #344b30; box-shadow: 0 4px #17271c; }
+#rushPlayerSelect .rush-player-card:hover, #rushPlayerSelect .rush-player-card:focus-visible { border-color: #f3cf76; background: #fff0c9; transform: translateY(-3px); }
+.rush-player-card strong { font-size: clamp(10px, 1.8vw, 15px); }
+.rush-player-card .rush-choose { font-size: 10px; color: #526d42; }
+.rush-avatar { width: 96px; max-width: 100%; height: 142px; position: relative; display: block; }
+.rush-avatar .rush-head { position: absolute; width: 76%; height: 55%; left: 12%; top: 0; object-fit: contain; z-index: 3; filter: drop-shadow(1px 2px 0 #4e3b2d55); }
+.rush-avatar .rush-torso { position: absolute; top: 48%; left: 24%; width: 52%; height: 32%; border: 3px solid #3e342a; background: var(--rush-shirt,#537c4a); border-radius: 7px 7px 2px 2px; z-index: 2; }
+.rush-avatar .rush-apron { position: absolute; inset: 18% 15% 5%; background: #f3dfab; border: 2px solid #ad8a5d; }
+.rush-avatar .rush-apron::after { content: ''; position: absolute; width: 45%; height: 30%; bottom: 10%; left: 25%; border: 1px solid #ad8a5d; }
+.rush-avatar .rush-arm { position: absolute; top: 53%; height: 25%; width: 16%; background: #dba47c; border: 2px solid #594334; z-index: 1; border-radius: 3px; }
+.rush-avatar .rush-arm-left { left: 12%; transform: rotate(12deg); }
+.rush-avatar .rush-arm-right { right: 12%; transform: rotate(-12deg); }
+.rush-avatar .rush-leg { position: absolute; top: 77%; height: 19%; width: 23%; background: #394348; border: 2px solid #302a27; border-bottom: 6px solid #302a27; }
+.rush-avatar .rush-leg-left { left: 25%; }
+.rush-avatar .rush-leg-right { right: 25%; }
+.rush-avatar .rush-shadow { position: absolute; bottom: 0; left: 15%; width: 70%; height: 7%; background: #66543b40; border-radius: 50%; }
+#rushPlayerSelect .rush-back { background: #526750; padding: 10px 20px; }
+.rush-player-badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; margin-top: 8px; border: 2px solid #81946c; color: #ffe3a7; background: #22382b; font-size: 12px; }
+.rush-player-badge img { width: 27px; height: 30px; object-fit: contain; }
+/* Keep the original CSS cashier body; substitute the photo for its original head. */
+.cashier.rush-personalized .cashier-hair, .cashier.rush-personalized .cashier-head { visibility: hidden; }
+.cashier .rush-cashier-face { position: absolute; z-index: 3; width: 94%; height: 67%; top: -15%; left: 3%; object-fit: contain; object-position: center bottom; filter: drop-shadow(1px 2px 0 #4e3b2d55); pointer-events: none; }
+.cashier.rush-personalized .cashier-body { background: var(--rush-shirt,#65874e); }
+@media (max-width: 600px) {
+  .rush-player-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 12px 0; }
+  .rush-avatar { height: 116px; width: 80px; }
+  #rushPlayerSelect .rush-player-panel { padding: 12px; }
+  .rush-player-panel .rush-intro { margin-bottom: 10px; }
+}

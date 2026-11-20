@@ -9,6 +9,7 @@
     <title>Canteen Rush!</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/players.css">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
                 <div class="stat-box">
                     <span>SERVED</span>
-                    <h2 id="score">000</h2>
+                    <h2 id="score">0/10</h2>
                 </div>
 
                 <div class="stat-box">
@@ -485,11 +486,6 @@
                     CANTEEN RUSH!
                 </h1>
 
-                <p class="menu-tagline">
-                    One counter. One queue. One hungry campus.
-                </p>
-
-
                 <!-- Start Shift Button -->
 
                 <button id="startBtn"
@@ -581,8 +577,8 @@
                         <h3>Start the Shift</h3>
 
                         <p>
-                            Choose your difficulty and open
-                            the canteen.
+                          Successfully serve 10 customers
+                            before the time runs out.
                         </p>
 
                     </div>
@@ -633,8 +629,8 @@
                         <h3>Watch Their Patience</h3>
 
                         <p>
-                            Serve customers before their
-                            patience runs out.
+                            Serve 10 customers before the
+                            time runs out to win the game.
                         </p>
 
                     </div>
@@ -868,10 +864,11 @@
 
     <!-- Queue Data Structure -->
 
-    <script src="js/queue.js"></script>
+   <script src="js/queue.js"></script>
 
     <!-- Game Logic -->
 
+    <script src="js/players.js"></script>
     <script src="js/game.js"></script>
 
 </body>

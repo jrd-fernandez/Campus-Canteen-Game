@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     const MAX_QUEUE = 6;
     const SHIFT_DURATION = 60;
+    const TARGET_SCORE = 10;
 
 
     // ========================================
@@ -568,6 +569,14 @@ function moveCustomer(node, index) {
             playSound("correct");
 
             renderQueue("served");
+
+            // Complete the shift after serving 10 customers
+
+if (score >= TARGET_SCORE) {
+    updateUI();
+    endGame();
+    return;
+}
         }
 
         // WRONG FOOD
@@ -643,7 +652,7 @@ function moveCustomer(node, index) {
     function updateUI() {
 
         $("#score").text(
-            String(score).padStart(3, "0")
+      score + "/" + TARGET_SCORE
         );
 
         $("#missed").text(
@@ -666,8 +675,7 @@ function moveCustomer(node, index) {
         );
 
     }
-
-
+    
     // ========================================
     // 16. FORMAT GAME TIMER
     // ========================================
@@ -923,10 +931,14 @@ function moveCustomer(node, index) {
             accuracy + "%"
         );
 
-        $("#resultTitle").text("SHIFT COMPLETED!");
+       $("#resultTitle").text(
+        score >= TARGET_SCORE
+        ? "SHIFT COMPLETED!"
+        : "SHIFT FAILED!"
 
-        if (score >= 15 && accuracy >= 80) {
+        );
 
+if (score >= TARGET_SCORE) {
             $("#resultIcon").text("🏆");
 
             $("#resultMessage").text(
@@ -968,7 +980,9 @@ function moveCustomer(node, index) {
 
     function showMainMenu() {
 
-        clearInterval(gameInterval);
+    PlayerSelection.reset();
+
+    clearInterval(gameInterval);
 
         gameState = "menu";
 
@@ -1015,13 +1029,17 @@ function moveCustomer(node, index) {
     // 25. GAME CONTROL BUTTONS
     // ========================================
 
-    $("#startBtn").click(function () {
+   $("#startBtn").click(function () {
+
+    PlayerSelection.open(function () {
 
         $("#pauseBtn").text("PAUSE");
 
         startGame();
 
     });
+
+}); 
 
     $("#pauseBtn").click(togglePause);
 
