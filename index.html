@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Canteen Rush!</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <!-- ==================== HEADER ==================== -->
+
+        <header class="game-header">
+
+            <div class="game-title">
+                <h1>CANTEEN RUSH!</h1>
+                <p>Campus Lunch Simulator</p>
+            </div>
+
+            <div class="game-stats">
+
+                <div class="stat-box">
+                    <span>SERVED</span>
+                    <h2 id="score">000</h2>
+                </div>
+
+                <div class="stat-box">
+                    <span>TIME LEFT</span>
+                    <h2 id="timer">01:00</h2>
+                </div>
+
+                <div class="stat-box">
+                    <span>WAITING</span>
+                    <h2 id="queueCount">0</h2>
+                </div>
+
+                <div class="stat-box">
+                    <span>WALK-OUTS</span>
+                    <h2 id="missed">00</h2>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==================== GAME LAYOUT ==================== -->
+
+        <div class="game-layout">
+
+            <!-- CANTEEN ENVIRONMENT -->
+
+            <section class="canteen-area">
+
+                <!-- Background Wall -->
+
+                <div class="canteen-wall">
+
+                    <!-- Menu Board -->
+
+                    <div class="menu-board">
+
+                        <h3>TODAY'S MENU</h3>
+
+                        <div class="menu-item">
+                            <span>Siomai Rice</span>
+                            <span>₱35</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Chicken Adobo</span>
+                            <span>₱55</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Pancit Canton</span>
+                            <span>₱25</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Gulaman</span>
+                            <span>₱15</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Windows -->
+
+                    <div class="windows">
+
+                        <div class="window"></div>
+                        <div class="window"></div>
+                        <div class="window"></div>
+
+                    </div>
+
+                    <!-- Wall Clock -->
+
+                    <div class="wall-clock">
+
+                        <div class="clock-hour"></div>
+                        <div class="clock-minute"></div>
+                        <div class="clock-center"></div>
+
+                    </div>
+
+                </div>
+
+                <!-- Wall Decorations -->
+
+                <div class="wall-tiles"></div>
+
+                <!-- Floor -->
+
+                <div class="canteen-floor"></div>
+
+
+                <!-- CASHIER STATION -->
+
+                <div class="cashier-station">
+
+                    <div class="cashier-sign">
+                        FOOD COUNTER
+                    </div>
+
+                    <!-- Cashier Character -->
+
+                    <div class="cashier">
+
+                        <div class="cashier-hair"></div>
+
+                        <div class="cashier-head">
+                            <div class="cashier-eye left-eye"></div>
+                            <div class="cashier-eye right-eye"></div>
+                            <div class="cashier-mouth"></div>
+                        </div>
+
+                        <div class="cashier-body">
+
+                            <div class="cashier-apron"></div>
+
+                            <div class="cashier-arm left-arm"></div>
+                            <div class="cashier-arm right-arm"></div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Counter Table -->
+
+                    <div class="counter-table">
+
+                        <div class="counter-top"></div>
+
+                        <div class="cash-register">
+                            <div class="register-screen"></div>
+                            <div class="register-buttons"></div>
+                        </div>
+
+                        <div class="counter-front">
+
+                            <div class="counter-panel"></div>
+
+                            <div class="counter-name">
+                                SERVICE COUNTER
+                            </div>
+
+                            <div class="counter-panel"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOMER QUEUE -->
+
+                <div class="queue-area">
+
+                    <!-- Customer Characters -->
+
+                    <div id="customerQueue"
+                         class="customer-queue">
+
+                        <!-- Customers are generated by JavaScript -->
+
+                    </div>
+
+                    <!-- Queue Path -->
+
+                    <div class="queue-path">
+
+                        <span class="queue-arrow">←</span>
+                        <span class="queue-arrow">←</span>
+                        <span class="queue-arrow">←</span>
+                        <span class="queue-arrow">←</span>
+                        <span class="queue-arrow">←</span>
+
+                    </div>
+
+                    <!-- Queue Labels -->
+
+                    <div class="queue-labels">
+
+                        <span class="front-label">
+                            FRONT
+                        </span>
+
+                        <span class="rear-label">
+                            REAR
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOMER ENTRANCE -->
+
+                <div class="entrance">
+
+                    <div class="entrance-sign">
+                        ENTRANCE
+                    </div>
+
+                    <div class="door">
+
+                        <div class="door-window"></div>
+                        <div class="door-handle"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================== SERVING STATION ==================== -->
+
+            <section class="serving-station">
+
+                <!-- Current Customer Order -->
+
+                <div class="current-order">
+
+                    <p class="order-label">
+                        CURRENT ORDER
+                    </p>
+
+                    <span id="orderNumber">
+                        #---
+                    </span>
+
+                    <div class="order-details">
+
+                        <div id="orderIcon"
+                             class="order-icon">
+                            🍽️
+                        </div>
+
+                        <div class="order-info">
+
+                            <h3 id="orderName">
+                                No Customer
+                            </h3>
+
+                            <p id="orderStatus">
+                                Waiting for customers...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Patience Meter -->
+
+                    <div class="patience-container">
+
+                        <span>PATIENCE</span>
+
+                        <div class="patience-track">
+
+                            <div id="currentPatience"
+                                 class="patience-fill">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOOD BUTTONS -->
+
+                <div class="food-menu">
+
+                    <!-- Siomai Rice -->
+
+                    <button class="food-btn"
+                            data-food="siomai"
+                            disabled>
+
+                        <span class="food-icon">
+                            🍚
+                        </span>
+
+                        <span class="food-name">
+                            Siomai Rice
+                        </span>
+
+                        <span class="key-label">
+                            1
+                        </span>
+
+                    </button>
+
+
+                    <!-- Chicken Adobo -->
+
+                    <button class="food-btn"
+                            data-food="adobo"
+                            disabled>
+
+                        <span class="food-icon">
+                            🍗
+                        </span>
+
+                        <span class="food-name">
+                            Chicken Adobo
+                        </span>
+
+                        <span class="key-label">
+                            2
+                        </span>
+
+                    </button>
+
+
+                    <!-- Pancit Canton -->
+
+                    <button class="food-btn"
+                            data-food="pancit"
+                            disabled>
+
+                        <span class="food-icon">
+                            🍜
+                        </span>
+
+                        <span class="food-name">
+                            Pancit Canton
+                        </span>
+
+                        <span class="key-label">
+                            3
+                        </span>
+
+                    </button>
+
+
+                    <!-- Sago't Gulaman -->
+
+                    <button class="food-btn"
+                            data-food="gulaman"
+                            disabled>
+
+                        <span class="food-icon">
+                            🥤
+                        </span>
+
+                        <span class="food-name">
+                            Sago't Gulaman
+                        </span>
+
+                        <span class="key-label">
+                            4
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ==================== CONTROL PANEL ==================== -->
+
+        <section class="control-panel">
+
+            <!-- Game Message -->
+
+            <div class="message-container">
+
+                <span class="message-label">
+                    COUNTER NOTES
+                </span>
+
+                <p id="gameMessage"
+                   class="game-message"
+                   aria-live="polite">
+
+                    Start a shift to open the canteen.
+
+                </p>
+
+            </div>
+
+
+            <!-- Game Controls -->
+
+            <div class="game-controls">
+
+                <button id="soundBtn"
+                        class="sound-btn">
+                    SOUND: ON
+                </button>
+
+                <button id="pauseBtn"
+                        class="pause-btn"
+                        disabled>
+                    PAUSE
+                </button>
+
+                <button id="restartBtn"
+                        class="restart-btn"
+                        disabled>
+                    RESTART
+                </button>
+
+                <button id="menuBtn"
+                        class="main-menu-btn"
+                        disabled>
+                    MAIN MENU
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== START MENU ==================== -->
+
+        <section id="startMenu" class="start-menu">
+
+            <!-- How to Play Button -->
+
+            <button id="howToPlayBtn"
+                    class="how-to-play-btn">
+                ? HOW TO PLAY
+            </button>
+
+            <!-- Sound Button -->
+
+            <button id="menuSoundBtn"
+                    class="menu-sound-btn">
+                SOUND: ON
+            </button>
+
+
+            <!-- Main Menu Content -->
+
+            <div class="menu-content">
+
+                <!-- Game Logo -->
+
+                <div class="game-logo">
+                    🍱
+                </div>
+
+                <p class="menu-subtitle">
+                    THE LUNCH BREAK CHALLENGE
+                </p>
+
+                <h1 class="menu-title">
+                    CANTEEN RUSH!
+                </h1>
+
+                <p class="menu-tagline">
+                    One counter. One queue. One hungry campus.
+                </p>
+
+
+                <!-- Start Shift Button -->
+
+                <button id="startBtn"
+                        class="menu-start-btn">
+
+                    ▶ START SHIFT
+
+                </button>
+
+
+                <!-- Difficulty Selection -->
+
+                <div class="difficulty-section">
+
+                    <p>SELECT DIFFICULTY</p>
+
+                    <div class="difficulty-options">
+
+                        <!-- Easy -->
+
+                        <label class="difficulty-btn easy">
+
+                            <input type="radio"
+                                   name="difficulty"
+                                   value="easy">
+
+                            <span>EASY</span>
+
+                        </label>
+
+
+                        <!-- Normal -->
+
+                        <label class="difficulty-btn normal">
+
+                            <input type="radio"
+                                   name="difficulty"
+                                   value="normal"
+                                   checked>
+
+                            <span>NORMAL</span>
+
+                        </label>
+
+
+                        <!-- Hard -->
+
+                        <label class="difficulty-btn hard">
+
+                            <input type="radio"
+                                   name="difficulty"
+                                   value="hard">
+
+                            <span>HARD</span>
+
+                        </label>
+
+                    </div>
+
+                    <p id="difficultyDescription">
+
+                        Balanced customer arrivals and patience.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== HOW TO PLAY ==================== -->
+
+        <section id="howToPlayModal"
+                 class="modal-overlay"
+                 hidden>
+
+            <div class="modal-content">
+
+                <h2>HOW TO PLAY</h2>
+
+                <div class="instruction">
+
+                    <span class="instruction-number">01</span>
+
+                    <div>
+
+                        <h3>Start the Shift</h3>
+
+                        <p>
+                            Choose your difficulty and open
+                            the canteen.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-number">02</span>
+
+                    <div>
+
+                        <h3>Watch the Queue</h3>
+
+                        <p>
+                            Customers enter from the right
+                            and join the rear of the line.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-number">03</span>
+
+                    <div>
+
+                        <h3>Serve the First Customer</h3>
+
+                        <p>
+                            Select the correct food requested
+                            by the customer at the front.
+                            Follow the FIFO rule.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-number">04</span>
+
+                    <div>
+
+                        <h3>Watch Their Patience</h3>
+
+                        <p>
+                            Serve customers before their
+                            patience runs out.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-number">05</span>
+
+                    <div>
+
+                        <h3>Complete the Shift</h3>
+
+                        <p>
+                            Serve as many customers as possible
+                            before the time runs out.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Keyboard Controls -->
+
+                <div class="keyboard-guide">
+
+                    <h3>KEYBOARD CONTROLS</h3>
+
+                    <p><kbd>1</kbd> Siomai Rice</p>
+                    <p><kbd>2</kbd> Chicken Adobo</p>
+                    <p><kbd>3</kbd> Pancit Canton</p>
+                    <p><kbd>4</kbd> Sago't Gulaman</p>
+
+                    <p><kbd>Space</kbd> Pause / Resume</p>
+
+                </div>
+
+                <button id="closeHowToPlayBtn"
+                        class="close-modal-btn">
+                    BACK TO MENU
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== PAUSE SCREEN ==================== -->
+
+        <section id="pauseScreen"
+                 class="modal-overlay"
+                 hidden>
+
+            <div class="modal-content pause-content">
+
+                <div class="pause-icon">Ⅱ</div>
+
+                <h2>GAME PAUSED</h2>
+
+                <p>Take a quick break!</p>
+
+                <button id="resumeBtn">
+                    RESUME SHIFT
+                </button>
+
+                <button id="pauseRestartBtn">
+                    RESTART SHIFT
+                </button>
+
+                <button id="pauseMenuBtn">
+                    MAIN MENU
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== GAME OVER ==================== -->
+
+        <section id="gameOver"
+                 class="modal-overlay"
+                 hidden>
+
+            <div class="modal-content game-over-content">
+
+                <div class="result-icon" id="resultIcon">
+                    🏆
+                </div>
+
+                <h2 id="resultTitle">
+                    SHIFT COMPLETED!
+                </h2>
+
+                <p id="resultMessage">
+                    Great work at the canteen!
+                </p>
+
+
+                <!-- Final Results -->
+
+                <div class="result-stats">
+
+                    <div class="result-box">
+
+                        <span>CUSTOMERS SERVED</span>
+
+                        <h3 id="finalScore">0</h3>
+
+                    </div>
+
+                    <div class="result-box">
+
+                        <span>WALK-OUTS</span>
+
+                        <h3 id="finalMissed">0</h3>
+
+                    </div>
+
+                    <div class="result-box">
+
+                        <span>WRONG ORDERS</span>
+
+                        <h3 id="finalWrong">0</h3>
+
+                    </div>
+
+                    <div class="result-box">
+
+                        <span>ACCURACY</span>
+
+                        <h3 id="finalAccuracy">0%</h3>
+
+                    </div>
+
+                </div>
+
+                <div class="result-controls">
+
+                    <button id="playAgainBtn">
+                        PLAY AGAIN
+                    </button>
+
+                    <button id="resultMenuBtn">
+                        MAIN MENU
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== CUSTOMER TEMPLATE ==================== -->
+
+        <template id="customerTemplate">
+
+            <div class="customer">
+
+                <!-- Food Order Bubble -->
+
+                <div class="order-bubble">
+
+                    <span class="customer-order-icon"></span>
+
+                </div>
+
+                <!-- Customer Patience -->
+
+                <div class="customer-patience">
+
+                    <div class="customer-patience-fill"></div>
+
+                </div>
+
+                <!-- Pixel Art Character -->
+
+                <div class="customer-character">
+
+                    <div class="customer-hair"></div>
+
+                    <div class="customer-head">
+
+                        <div class="customer-eye left-eye"></div>
+                        <div class="customer-eye right-eye"></div>
+                        <div class="customer-mouth"></div>
+
+                    </div>
+
+                    <div class="customer-body">
+
+                        <div class="customer-arm left-arm"></div>
+                        <div class="customer-arm right-arm"></div>
+
+                        <div class="customer-bag"></div>
+
+                    </div>
+
+                    <div class="customer-legs">
+
+                        <div class="customer-leg left-leg"></div>
+                        <div class="customer-leg right-leg"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="customer-shadow"></div>
+
+                <!-- Customer Queue Number -->
+
+                <span class="customer-number">
+                    #000
+                </span>
+
+            </div>
+
+        </template>
+
+
+    </main>
+
+    <!-- ==================== SCRIPTS ==================== -->
+
+    <!-- jQuery -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Queue Data Structure -->
+
+    <script src="js/queue.js"></script>
+
+    <!-- Game Logic -->
+
+    <script src="js/game.js"></script>
+
+</body>
+
+</html>

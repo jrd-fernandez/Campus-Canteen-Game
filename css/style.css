@@ -1,0 +1,2408 @@
+
+/* ========================================
+   01. ROOT VARIABLES
+======================================== */
+
+:root {
+    --dark-green: #192b23;
+    --panel-green: #385440;
+    --light-green: #779b50;
+    --cream: #f5e6bd;
+    --gold: #d6b775;
+    --wood: #97663f;
+    --dark-wood: #63472f;
+    --danger: #a85b4b;
+    --border: #81946c;
+    --shadow: #142119;
+}
+
+
+/* ========================================
+   02. GLOBAL SETTINGS
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--dark-green);
+    color: var(--cream);
+    font-family: "Courier New", monospace;
+    padding: 20px;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+button:not(:disabled):hover {
+    filter: brightness(1.15);
+}
+
+button:not(:disabled):active {
+    transform: translateY(3px);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button:focus-visible,
+summary:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ========================================
+   03. GAME CONTAINER
+======================================== */
+
+.game-container {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 12px;
+    background: #24382c;
+    border: 4px solid var(--border);
+    box-shadow: 0 8px 0 var(--shadow);
+    overflow: hidden;
+}
+
+
+/* ========================================
+   04. GAME HEADER
+======================================== */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 18px 20px;
+    background: var(--panel-green);
+    border: 2px solid var(--border);
+    margin-bottom: 12px;
+}
+
+.game-title h1 {
+    color: #ffe2a4;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 900;
+    text-shadow: 3px 3px #1c3023;
+}
+
+.game-title p {
+    color: #b8cba9;
+    margin-top: 4px;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+
+/* ========================================
+   05. GAME STATISTICS
+======================================== */
+
+.game-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.stat-box {
+    text-align: center;
+    background: #22382b;
+    padding: 10px 14px;
+    border: 2px solid #58704f;
+}
+
+.stat-box span {
+    font-size: 11px;
+    color: #b5c9a4;
+}
+
+.stat-box h2 {
+    color: #ffe3a7;
+    font-size: 25px;
+    margin-top: 4px;
+}
+
+
+/* ========================================
+   06. MAIN GAME LAYOUT
+======================================== */
+
+.game-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.canteen-area {
+    position: relative;
+    width: 100%;
+    height: clamp(340px, 42vw, 520px);
+    background: #d5c29c;
+    border: 3px solid #7d6b4d;
+    overflow: hidden;
+    --person-width: clamp(26px, 5.5vw, 70px);
+}
+
+
+/* ========================================
+   07. CANTEEN WALL
+======================================== */
+
+.canteen-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 44%;
+    background: #ede1bf;
+    border-top: 12px solid #799368;
+    border-bottom: 5px solid #ac9c77;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px 3%;
+}
+
+
+/* ========================================
+   08. MENU BOARD
+======================================== */
+
+.menu-board {
+    flex: 0 0 25%;
+    max-width: 250px;
+    background: #344d34;
+    border: 6px solid #87623e;
+    box-shadow: 4px 5px #b4a17d;
+    padding: 12px;
+    color: var(--cream);
+}
+
+.menu-board h3 {
+    text-align: center;
+    font-size: clamp(10px, 1.5vw, 16px);
+    color: #ffe0a2;
+    border-bottom: 1px solid #8c9c74;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 7px 0;
+    font-size: clamp(9px, 1.1vw, 13px);
+}
+
+.menu-item span:last-child {
+    color: #e9c878;
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   09. WINDOWS
+======================================== */
+
+.windows {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 25px);
+    flex: 1;
+    min-width: 0;
+}
+
+.window {
+    position: relative;
+    width: 30%;
+    max-width: 160px;
+    height: clamp(65px, 11vw, 140px);
+    background: linear-gradient(
+        135deg,
+        #d5e9db,
+        #8fb8ba
+    );
+    border: 7px solid #826749;
+    box-shadow: 4px 5px #b4a17d;
+    overflow: hidden;
+}
+
+.window::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(50% - 3px);
+    width: 6px;
+    height: 100%;
+    background: #826749;
+    z-index: 1;
+}
+
+.window::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 3px);
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: #826749;
+}
+
+.window {
+    background-image:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0 24px,
+            #ffffff45 25px 32px,
+            transparent 33px 65px
+        ),
+        linear-gradient(#b9d7dc, #8cae9c);
+}
+
+
+/* ========================================
+   10. WALL CLOCK
+======================================== */
+
+.wall-clock {
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(42px, 6vw, 75px);
+    aspect-ratio: 1;
+    background: #f7e7bf;
+    border: 6px solid #795739;
+    border-radius: 50%;
+    box-shadow: 3px 4px #b4a17d;
+}
+
+.clock-hour,
+.clock-minute {
+    position: absolute;
+    left: calc(50% - 2px);
+    bottom: 50%;
+    width: 4px;
+    background: #493c2c;
+    transform-origin: bottom center;
+}
+
+.clock-hour {
+    height: 25%;
+    transform: rotate(90deg);
+}
+
+.clock-minute {
+    height: 35%;
+    animation: clock-tick 60s linear infinite;
+}
+
+.clock-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    background: #493c2c;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes clock-tick {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ========================================
+   11. WALL TILES
+======================================== */
+
+.wall-tiles {
+    position: absolute;
+    top: 44%;
+    width: 100%;
+    height: 17%;
+    background-color: #729063;
+    background-image:
+        linear-gradient(
+            #435c454d 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            90deg,
+            #435c454d 2px,
+            transparent 2px
+        );
+    background-size: 40px 32px;
+    border-bottom: 5px solid #506447;
+}
+
+
+/* ========================================
+   12. CANTEEN FLOOR
+======================================== */
+
+.canteen-floor {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 39%;
+    background-color: #d8c9aa;
+    background-image:
+        conic-gradient(
+            #c4b294 25%,
+            #ded0b4 0 50%,
+            #c4b294 0 75%,
+            #ded0b4 0
+        );
+    background-size: 80px 80px;
+}
+
+
+/* ========================================
+   13. CASHIER STATION
+======================================== */
+
+.cashier-station {
+    position: absolute;
+    bottom: 6%;
+    left: 2%;
+    width: 19%;
+    height: 51%;
+    z-index: 3;
+}
+
+.cashier-sign {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 3px;
+    background: #4c7045;
+    border: 3px solid var(--dark-wood);
+    color: #f7dfad;
+    font-size: clamp(9px, 1.3vw, 15px);
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* ========================================
+   14. CASHIER CHARACTER
+======================================== */
+
+.cashier {
+    position: absolute;
+    width: 42%;
+    max-width: 90px;
+    height: 55%;
+    left: 22%;
+    bottom: 32%;
+    z-index: 2;
+}
+
+.cashier-hair {
+    position: absolute;
+    top: 0;
+    left: 13%;
+    width: 74%;
+    height: 19%;
+    background: #49352a;
+    box-shadow: 4px 0 #49352a;
+    z-index: 2;
+}
+
+.cashier-head {
+    position: absolute;
+    top: 12%;
+    left: 17%;
+    width: 66%;
+    height: 35%;
+    background: #dfab83;
+    border-bottom: 4px solid #b57d59;
+}
+
+.cashier-eye {
+    position: absolute;
+    top: 42%;
+    width: 10%;
+    height: 14%;
+    background: #433128;
+}
+
+.left-eye {
+    left: 20%;
+}
+
+.right-eye {
+    right: 20%;
+}
+
+.cashier-mouth {
+    position: absolute;
+    bottom: 18%;
+    left: 39%;
+    width: 22%;
+    height: 8%;
+    background: #8b5946;
+}
+
+.cashier-body {
+    position: absolute;
+    top: 47%;
+    left: 10%;
+    width: 80%;
+    height: 53%;
+    background: #65874e;
+}
+
+.cashier-apron {
+    position: absolute;
+    top: 8%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    background: #e3d5ae;
+}
+
+.cashier-arm {
+    position: absolute;
+    top: 12%;
+    width: 18%;
+    height: 65%;
+    background: #dfab83;
+}
+
+.left-arm {
+    left: -15%;
+}
+
+.right-arm {
+    right: -15%;
+}
+
+
+/* ========================================
+   15. COUNTER TABLE
+======================================== */
+
+.counter-table {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 39%;
+    z-index: 4;
+}
+
+.counter-top {
+    position: relative;
+    width: 108%;
+    left: -4%;
+    height: 19%;
+    background: #c69760;
+    border: 3px solid #765239;
+}
+
+.counter-front {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 81%;
+    background: repeating-linear-gradient(
+        0deg,
+        #97663f 0 18px,
+        #8b5937 18px 20px
+    );
+    border: 3px solid #69482f;
+}
+
+.counter-name {
+    padding: 8px 4px;
+    background: #496546;
+    border: 2px solid #3b5037;
+    color: #e5d8ac;
+    text-align: center;
+    font-size: clamp(7px, 0.85vw, 11px);
+    font-weight: bold;
+}
+
+.counter-panel {
+    flex: 1;
+    height: 70%;
+    margin: 4px;
+    background: #ac7a4c;
+    border: 2px solid #795337;
+}
+
+
+/* ========================================
+   16. CASH REGISTER
+======================================== */
+
+.cash-register {
+    position: absolute;
+    right: 7%;
+    bottom: 100%;
+    width: 28%;
+    height: 33%;
+    background: #52605b;
+    border: 3px solid #34433d;
+}
+
+.register-screen {
+    width: 80%;
+    height: 35%;
+    margin: 3px auto;
+    background: #b6ca94;
+    border: 2px solid #293c30;
+}
+
+.register-buttons {
+    width: 75%;
+    height: 30%;
+    margin: auto;
+    background: repeating-linear-gradient(
+        90deg,
+        #c3c5ae 0 4px,
+        #3d4b40 4px 6px
+    );
+}
+
+
+/* ========================================
+   17. CUSTOMER QUEUE AREA
+======================================== */
+
+.queue-area {
+    position: absolute;
+    left: 23%;
+    right: 12%;
+    bottom: 5%;
+    height: 56%;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.customer-queue {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.queue-path {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border-top: 2px dashed #8c795b;
+    padding: 3px 0;
+}
+
+.queue-arrow {
+    font-weight: bold;
+    color: #827155;
+    font-size: 16px;
+}
+
+.queue-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #67543b;
+}
+
+.front-label {
+    background: #5d7e47;
+    color: #fff0cc;
+    padding: 4px 10px;
+}
+
+.rear-label {
+    padding: 4px 10px;
+    background: #b3a17f;
+}
+
+
+/* ========================================
+   18. CUSTOMER CHARACTER
+======================================== */
+
+.customer {
+    position: relative;
+    flex: 0 0 calc(100% / 6);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+
+    --shirt-color: #6688a6;
+    --skin-color: #dfae85;
+    --hair-color: #49382d;
+    --pants-color: #414b4c;
+}
+
+.customer-character {
+    position: relative;
+    width: var(--person-width);
+    max-width: 85%;
+    aspect-ratio: 0.58;
+    z-index: 2;
+}
+
+
+/* CUSTOMER HAIR */
+
+.customer-hair {
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height: 13%;
+    background: var(--hair-color);
+    box-shadow: 3px 3px var(--hair-color);
+    z-index: 2;
+}
+
+
+/* CUSTOMER HEAD */
+
+.customer-head {
+    position: absolute;
+    top: 9%;
+    left: 18%;
+    width: 64%;
+    height: 27%;
+    background: var(--skin-color);
+    border-bottom: 3px solid #b98160;
+}
+
+.customer-eye {
+    position: absolute;
+    top: 42%;
+    width: 10%;
+    height: 15%;
+    background: #433128;
+}
+
+.customer-mouth {
+    position: absolute;
+    bottom: 18%;
+    left: 38%;
+    width: 24%;
+    height: 8%;
+    background: #965e4b;
+}
+
+
+/* CUSTOMER BODY */
+
+.customer-body {
+    position: absolute;
+    top: 36%;
+    left: 14%;
+    width: 72%;
+    height: 38%;
+    background: var(--shirt-color);
+    border-bottom: 3px solid #00000025;
+}
+
+.customer-arm {
+    position: absolute;
+    top: 7%;
+    width: 16%;
+    height: 75%;
+    background: var(--skin-color);
+}
+
+.customer-bag {
+    position: absolute;
+    top: 7%;
+    right: -20%;
+    width: 35%;
+    height: 85%;
+    background: #795c3e;
+    border: 2px solid #59432e;
+    border-radius: 3px;
+}
+
+
+/* CUSTOMER LEGS */
+
+.customer-legs {
+    position: absolute;
+    top: 74%;
+    left: 16%;
+    width: 68%;
+    height: 26%;
+}
+
+.customer-leg {
+    position: absolute;
+    width: 43%;
+    height: 100%;
+    background: var(--pants-color);
+    border-bottom: 5px solid #302c29;
+}
+
+.left-leg {
+    left: 0;
+}
+
+.right-leg {
+    right: 0;
+}
+
+.customer-shadow {
+    width: 65%;
+    height: 9px;
+    margin-top: -4px;
+    background: #66543b45;
+    border-radius: 50%;
+}
+
+.customer-number {
+    margin-top: 4px;
+    font-size: clamp(8px, 1vw, 12px);
+    font-weight: bold;
+    color: #655338;
+}
+
+
+/* ========================================
+   19. CUSTOMER COLOR VARIATIONS
+======================================== */
+
+.customer:nth-child(6n + 1) {
+    --shirt-color: #6688a6;
+}
+
+.customer:nth-child(6n + 2) {
+    --shirt-color: #b1775d;
+    --hair-color: #302a29;
+}
+
+.customer:nth-child(6n + 3) {
+    --shirt-color: #789654;
+    --hair-color: #795338;
+}
+
+.customer:nth-child(6n + 4) {
+    --shirt-color: #8875a1;
+}
+
+.customer:nth-child(6n + 5) {
+    --shirt-color: #ba9955;
+}
+
+.customer:nth-child(6n + 6) {
+    --shirt-color: #548f8a;
+}
+
+
+/* ========================================
+   20. CUSTOMER ORDER BUBBLE
+======================================== */
+
+.order-bubble {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72%;
+    max-width: 62px;
+    aspect-ratio: 1.25;
+    background: #fff6df;
+    border: 2px solid #927957;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    box-shadow: 2px 3px #76634730;
+}
+
+.order-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: calc(50% - 5px);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid #927957;
+}
+
+.customer-order-icon {
+    font-size: clamp(15px, 2.4vw, 30px);
+}
+
+
+/* ========================================
+   21. CUSTOMER PATIENCE BAR
+======================================== */
+
+.customer-patience {
+    width: 75%;
+    max-width: 65px;
+    height: 8px;
+    background: #a77a66;
+    border: 1px solid #745744;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.customer-patience-fill {
+    width: 100%;
+    height: 100%;
+    background: #729b45;
+    transition: width 0.2s linear;
+}
+
+.customer.impatient .customer-patience-fill {
+    background: #d3a044;
+}
+
+.customer.angry .customer-patience-fill {
+    background: #bd5146;
+}
+
+
+/* ========================================
+   22. ENTRANCE
+======================================== */
+
+.entrance {
+    position: absolute;
+    right: 2%;
+    bottom: 6%;
+    width: 9%;
+    height: 52%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.entrance-sign {
+    background: #466345;
+    border: 2px solid #685037;
+    padding: 7px 2px;
+    font-size: clamp(7px, 1vw, 12px);
+    text-align: center;
+    font-weight: bold;
+    color: #f4e4ba;
+}
+
+.door {
+    position: relative;
+    height: 85%;
+    width: 100%;
+    background: #a1b098;
+    border: 7px solid #765438;
+    box-shadow: inset 4px 0 #82927a;
+}
+
+.door-window {
+    position: absolute;
+    top: 8%;
+    left: 12%;
+    width: 76%;
+    height: 43%;
+    border: 3px solid #6e765e;
+    background: linear-gradient(
+        135deg,
+        #d1e3d5,
+        #8eb6b7
+    );
+}
+
+.door-handle {
+    position: absolute;
+    right: 10%;
+    top: 58%;
+    width: 7px;
+    height: 9px;
+    background: #655039;
+}
+
+
+/* ========================================
+   23. SERVING STATION
+======================================== */
+
+.serving-station {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    background: var(--panel-green);
+    border: 2px solid var(--border);
+}
+
+
+/* ========================================
+   24. CURRENT ORDER
+======================================== */
+
+.current-order {
+    position: relative;
+    flex: 0 0 25%;
+    min-width: 190px;
+    padding: 12px;
+    background: #22392c;
+    border: 2px solid #688058;
+}
+
+.order-label {
+    color: #b8cda5;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+#orderNumber {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 12px;
+    color: var(--gold);
+}
+
+.order-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 55px;
+}
+
+.order-icon {
+    font-size: 34px;
+}
+
+.order-info h3 {
+    font-size: 14px;
+    color: #ffe4ad;
+}
+
+.order-info p {
+    font-size: 10px;
+    color: #afc2a3;
+    margin-top: 4px;
+}
+
+
+/* CURRENT CUSTOMER PATIENCE */
+
+.patience-container span {
+    color: #b8cda5;
+    font-size: 9px;
+}
+
+.patience-track {
+    height: 8px;
+    margin-top: 4px;
+    border: 1px solid #9a9c78;
+    background: #765c4f;
+    overflow: hidden;
+}
+
+.patience-fill {
+    width: 0%;
+    height: 100%;
+    background: #83ad56;
+    transition: width 0.2s linear;
+}
+
+
+/* ========================================
+   25. FOOD MENU
+======================================== */
+
+.food-menu {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.food-btn {
+    position: relative;
+    min-width: 0;
+    min-height: 100px;
+    padding: 12px 8px;
+    background: #eddfb9;
+    border: 3px solid #aa956b;
+    border-radius: 4px;
+    color: #52432f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px #263b2c;
+}
+
+.food-btn:not(:disabled):hover {
+    background: #fff0c9;
+    border-color: #d7b66c;
+    transform: translateY(-3px);
+}
+
+.food-icon {
+    font-size: clamp(25px, 3vw, 40px);
+}
+
+.food-name {
+    font-size: clamp(10px, 1.2vw, 14px);
+    font-weight: bold;
+    text-align: center;
+}
+
+.key-label {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    min-width: 19px;
+    padding: 3px;
+    background: #c6b38b;
+    color: #5c4b32;
+    border: 1px solid #a28c63;
+    font-size: 11px;
+}
+
+
+/* ========================================
+   26. CONTROL PANEL
+======================================== */
+
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 12px;
+    padding: 12px;
+    background: var(--panel-green);
+    border: 2px solid var(--border);
+}
+
+.message-container {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-label {
+    font-size: 10px;
+    color: #b4c8a5;
+    letter-spacing: 1px;
+}
+
+.game-message {
+    font-size: 13px;
+    color: #ffe7b4;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+}
+
+.game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.game-controls button {
+    padding: 10px 14px;
+    border: 2px solid #82946d;
+    border-radius: 3px;
+    color: #fff2ce;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 3px #213326;
+}
+
+.sound-btn {
+    background: #516c4a;
+}
+
+.pause-btn {
+    background: #a58c48;
+}
+
+.restart-btn {
+    background: #965b46;
+}
+
+.main-menu-btn {
+    background: #4b6050;
+}
+
+
+/* ========================================
+   27. MAIN START MENU
+======================================== */
+
+.start-menu {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 65px 20px 25px;
+    overflow: auto;
+    background: rgba(12, 20, 15, 0.76);
+}
+
+.menu-content {
+    width: 100%;
+    max-width: 850px;
+    text-align: center;
+    color: var(--cream);
+    animation: menu-appear 0.5s ease-out;
+}
+
+@keyframes menu-appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ========================================
+   28. GAME LOGO AND TITLE
+======================================== */
+
+.game-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95px;
+    height: 95px;
+    margin: 0 auto 22px;
+    font-size: 57px;
+    background: #e9dbb4;
+    border: 4px solid #a78650;
+    border-radius: 12px;
+    box-shadow: 5px 6px #172219;
+    transform: rotate(-6deg);
+    animation: floating-logo 3s ease-in-out infinite;
+}
+
+@keyframes floating-logo {
+    0%, 100% {
+        transform: translateY(0) rotate(-6deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(-3deg);
+    }
+}
+
+.menu-subtitle {
+    color: #e1c17d;
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.menu-title {
+    margin: 12px 0;
+    font-size: clamp(30px, 6vw, 86px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    color: #ffe5ad;
+    text-shadow:
+        3px 3px #59754a,
+        6px 6px #334b31,
+        9px 9px #142119;
+}
+
+.menu-tagline {
+    margin-top: 20px;
+    margin-bottom: 28px;
+    font-size: clamp(12px, 1.5vw, 16px);
+    color: #c8d4b9;
+}
+
+
+/* ========================================
+   29. START SHIFT BUTTON
+======================================== */
+
+.menu-start-btn {
+    padding: 17px 45px;
+    background: #779b50;
+    border: 3px solid #acc884;
+    border-radius: 5px;
+    color: #fff2cc;
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: bold;
+    box-shadow: 0 6px #354f2d;
+}
+
+.menu-start-btn:hover {
+    background: #91b665;
+    transform: translateY(-3px);
+}
+
+.menu-start-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px #354f2d;
+}
+
+
+/* ========================================
+   30. DIFFICULTY SELECTION
+======================================== */
+
+.difficulty-section {
+    margin-top: 30px;
+}
+
+.difficulty-section > p {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #dfd1a7;
+}
+
+.difficulty-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.difficulty-btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.difficulty-btn input {
+    position: absolute;
+    opacity: 0;
+}
+
+.difficulty-btn span {
+    display: block;
+    min-width: 110px;
+    padding: 11px 15px;
+    border: 3px solid #ffffff20;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff1d0;
+    transition: 0.15s ease;
+}
+
+.easy span {
+    background: #52764b;
+}
+
+.normal span {
+    background: #b28c3d;
+}
+
+.hard span {
+    background: #99584b;
+}
+
+.difficulty-btn:hover span {
+    filter: brightness(1.15);
+}
+
+.difficulty-btn input:checked + span {
+    border-color: #ffe6ad;
+    box-shadow: 0 0 0 3px #192b23;
+    transform: translateY(-3px);
+}
+
+.difficulty-btn input:focus-visible + span {
+    outline: 3px solid white;
+    outline-offset: 4px;
+}
+
+#difficultyDescription {
+    margin-top: 14px;
+    color: #c1cdb3;
+    font-size: 12px;
+    letter-spacing: 0;
+}
+
+
+/* ========================================
+   31. MAIN MENU CORNER BUTTONS
+======================================== */
+
+.how-to-play-btn,
+.menu-sound-btn {
+    position: absolute;
+    top: 18px;
+    padding: 10px 15px;
+    background: #eadeba;
+    color: #43533a;
+    border: 3px solid #a18b62;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 3px #493f2d;
+    z-index: 2;
+}
+
+.how-to-play-btn {
+    left: 18px;
+}
+
+.menu-sound-btn {
+    right: 18px;
+}
+
+.menu-credit {
+    margin-top: 35px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #a9b99c;
+}
+
+
+/* ========================================
+   32. MODAL OVERLAY
+======================================== */
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: auto;
+    background: rgba(12, 20, 15, 0.88);
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 600px;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 25px;
+    background: #304b37;
+    color: var(--cream);
+    border: 4px solid #a0b17e;
+    box-shadow: 0 7px #142119;
+}
+
+.modal-content h2 {
+    color: #ffe0a1;
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    padding: 13px 20px;
+    background: #779b50;
+    color: #fff0cc;
+    border: 2px solid #a4bc7f;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    box-shadow: 0 4px #223726;
+}
+
+
+/* ========================================
+   33. HOW TO PLAY MODAL
+======================================== */
+
+.instruction {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px;
+    margin-bottom: 9px;
+    background: #233a2c;
+    border-left: 4px solid #89a569;
+}
+
+.instruction-number {
+    color: #d9b96f;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.instruction h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.instruction p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #c0ceb5;
+}
+
+.keyboard-guide {
+    padding: 15px;
+    background: #21372a;
+    margin-top: 15px;
+}
+
+.keyboard-guide h3 {
+    color: #dfc58b;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.keyboard-guide p {
+    margin: 9px 0;
+    font-size: 12px;
+}
+
+kbd {
+    display: inline-block;
+    padding: 4px 8px;
+    min-width: 25px;
+    text-align: center;
+    color: #493f2c;
+    background: #e7d5ae;
+    border-radius: 3px;
+    box-shadow: 0 2px #a18b66;
+}
+
+.close-modal-btn {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+}
+
+
+/* ========================================
+   34. PAUSE SCREEN
+======================================== */
+
+.pause-content {
+    max-width: 400px;
+    text-align: center;
+}
+
+.pause-icon {
+    font-size: 65px;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.pause-content p {
+    color: #bacdb0;
+    margin-bottom: 25px;
+}
+
+.pause-content button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+}
+
+#pauseRestartBtn {
+    background: #a78b49;
+}
+
+#pauseMenuBtn {
+    background: #925c49;
+}
+
+
+/* ========================================
+   35. GAME OVER SCREEN
+======================================== */
+
+.game-over-content {
+    text-align: center;
+    max-width: 520px;
+}
+
+.result-icon {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+#resultMessage {
+    color: #c1d0b6;
+    line-height: 1.5;
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.result-box {
+    padding: 15px 8px;
+    background: #22382a;
+    border: 2px solid #718b5d;
+}
+
+.result-box span {
+    font-size: 10px;
+    color: #bcd0ae;
+}
+
+.result-box h3 {
+    font-size: 32px;
+    color: #ffe2a4;
+    margin-top: 8px;
+}
+
+.result-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.result-controls button {
+    flex: 1;
+}
+
+#resultMenuBtn {
+    background: #92604c;
+}
+
+
+/* ========================================
+   36. CUSTOMER ANIMATIONS
+======================================== */
+
+.customer.entering {
+    animation: customer-enter 0.45s ease-out;
+}
+
+@keyframes customer-enter {
+    from {
+        opacity: 0;
+        transform: translateX(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.customer.served {
+    animation: customer-served 0.4s forwards;
+}
+
+@keyframes customer-served {
+    to {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+}
+
+.customer.leaving {
+    animation: customer-leave 0.4s forwards;
+}
+
+@keyframes customer-leave {
+    to {
+        opacity: 0;
+        transform: translateX(70px);
+    }
+}
+
+.customer.wrong-order {
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25%, 75% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+.food-btn.correct {
+    background: #a9cd85;
+    border-color: #668e46;
+}
+
+.food-btn.incorrect {
+    background: #d69b8b;
+    border-color: #a65243;
+}
+
+
+/* ========================================
+   37. FOOTER
+======================================== */
+
+/* ========================================
+   38. TABLET RESPONSIVENESS
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .game-stats {
+        flex: 1;
+    }
+
+    .game-header {
+        gap: 12px;
+    }
+
+    .serving-station {
+        flex-direction: column;
+    }
+
+    .current-order {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .food-btn {
+        min-height: 85px;
+    }
+
+    .control-panel {
+        flex-wrap: wrap;
+    }
+
+    .menu-board {
+        padding: 8px;
+    }
+
+    .menu-item {
+        margin: 5px 0;
+    }
+}
+
+
+/* ========================================
+   39. MOBILE RESPONSIVENESS
+======================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 5px;
+    }
+
+    .game-container {
+        padding: 6px;
+        border-width: 2px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .game-stats {
+        width: 100%;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .stat-box {
+        padding: 6px 3px;
+    }
+
+    .stat-box span {
+        font-size: 8px;
+    }
+
+    .stat-box h2 {
+        font-size: 18px;
+    }
+
+    .canteen-area {
+        height: 340px;
+    }
+
+    .canteen-wall {
+        gap: 9px;
+        padding: 8px;
+    }
+
+    .menu-board {
+        flex-basis: 40%;
+        border-width: 3px;
+        padding: 6px;
+    }
+
+    .windows {
+        gap: 5px;
+    }
+
+    .window {
+        width: 48%;
+        border-width: 4px;
+    }
+
+    .window:last-child {
+        display: none;
+    }
+
+    .wall-clock {
+        border-width: 4px;
+    }
+
+    .cashier-sign {
+        padding: 6px 2px;
+        border-width: 2px;
+    }
+
+    .counter-panel {
+        display: none;
+    }
+
+    .counter-name {
+        padding: 4px 2px;
+    }
+
+    .entrance-sign {
+        font-size: 6px;
+    }
+
+    .door {
+        border-width: 4px;
+    }
+
+    .queue-labels {
+        font-size: 8px;
+    }
+
+    .front-label,
+    .rear-label {
+        padding: 3px 5px;
+    }
+
+    .customer-patience {
+        height: 5px;
+    }
+
+    .serving-station {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .food-menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .food-btn {
+        min-height: 75px;
+    }
+
+    .control-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .game-controls {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .game-controls button {
+        padding: 10px 5px;
+    }
+
+    .start-menu {
+        align-items: flex-start;
+        padding-top: 100px;
+    }
+
+    .game-logo {
+        width: 75px;
+        height: 75px;
+        font-size: 43px;
+    }
+
+    .menu-title {
+        font-size: clamp(28px, 8vw, 42px);
+        letter-spacing: -1px;
+    }
+
+    .menu-subtitle {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .menu-tagline {
+        font-size: 12px;
+    }
+
+    .menu-start-btn {
+        padding: 15px 25px;
+    }
+
+    .difficulty-options {
+        gap: 6px;
+    }
+
+    .difficulty-btn span {
+        min-width: 75px;
+        padding: 9px 7px;
+        font-size: 12px;
+    }
+
+    .how-to-play-btn,
+    .menu-sound-btn {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .how-to-play-btn {
+        left: 10px;
+    }
+
+    .menu-sound-btn {
+        right: 10px;
+    }
+
+    .modal-content {
+        padding: 15px;
+    }
+
+    .modal-content h2 {
+        font-size: 22px;
+    }
+
+    .result-controls {
+        flex-direction: column;
+    }
+}
+
+
+/* ========================================
+   40. REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========================================
+   41. IMPROVED QUEUE MOVEMENT
+======================================== */
+
+.customer-queue {
+    position: relative;
+}
+
+.customer {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    width: calc(100% / 6);
+    transition: left 0.55s ease-in-out;
+    will-change: left;
+}
+
+
+/* ========================================
+   42. WALKING ANIMATION
+======================================== */
+
+.customer-leg,
+.customer-arm {
+    transform-origin: top center;
+}
+
+.customer.walking .customer-leg.left-leg {
+    animation: walk-left 0.3s linear infinite;
+}
+
+.customer.walking .customer-leg.right-leg {
+    animation: walk-right 0.3s linear infinite;
+}
+
+.customer.walking .customer-arm.left-arm {
+    animation: walk-right 0.3s linear infinite;
+}
+
+.customer.walking .customer-arm.right-arm {
+    animation: walk-left 0.3s linear infinite;
+}
+
+.customer.walking .customer-character {
+    animation: walking-bounce 0.3s linear infinite;
+}
+
+@keyframes walk-left {
+    0%, 100% {
+        transform: rotate(-18deg);
+    }
+
+    50% {
+        transform: rotate(18deg);
+    }
+}
+
+@keyframes walk-right {
+    0%, 100% {
+        transform: rotate(18deg);
+    }
+
+    50% {
+        transform: rotate(-18deg);
+    }
+}
+
+@keyframes walking-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+
+/* ========================================
+   43. FRONT CUSTOMER HIGHLIGHT
+======================================== */
+
+.customer.is-front .order-bubble {
+    border-color: #779b50;
+    box-shadow: 0 0 0 3px #779b5035;
+}
+
+.customer.is-front .customer-number {
+    background: #52764b;
+    color: #fff0cb;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+
+/* ========================================
+   44. SERVED CUSTOMER ANIMATION
+======================================== */
+
+.customer.departing {
+    pointer-events: none;
+    z-index: 5;
+}
+
+.customer.served {
+    animation: happy-customer 0.4s ease forwards;
+}
+
+@keyframes happy-customer {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-35px);
+    }
+}
+
+
+/* ========================================
+   45. ANGRY CUSTOMER ANIMATION
+======================================== */
+
+.customer.leaving {
+    animation: angry-customer 0.4s ease forwards;
+}
+
+@keyframes angry-customer {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+.customer.angry .order-bubble {
+    border-color: #bd5146;
+    background: #ffe0d3;
+}
+
+.customer.angry .customer-mouth {
+    height: 12%;
+    background: #793d30;
+}
+
+
+/* ========================================
+   46. IMPROVED FOOD BUTTONS
+======================================== */
+
+.food-icon {
+    display: grid;
+    place-items: center;
+    width: clamp(36px, 5vw, 60px);
+    aspect-ratio: 1;
+    background: #fff3d6;
+    border: 2px solid #c6b38b;
+    border-radius: 50%;
+    box-shadow: 0 3px #b6a27c;
+}
+
+.food-btn:not(:disabled):hover .food-icon {
+    transform: scale(1.08);
+}
+
+.food-icon {
+    transition: transform 0.2s ease;
+}
+
+.food-btn.correct {
+    background: #a9cd85;
+    border-color: #668e46;
+}
+
+.food-btn.incorrect {
+    background: #d69b8b;
+    border-color: #a65243;
+}
+
+
+/* ========================================
+   47. ENVIRONMENT IMPROVEMENTS
+======================================== */
+
+.canteen-area {
+    box-shadow:
+        inset 0 0 35px #63472f25,
+        0 4px #142119;
+}
+
+.counter-front {
+    box-shadow: inset 0 -8px #63472f35;
+}
+
+.door-window {
+    box-shadow: inset 3px 3px #ffffff40;
+}
+
+.queue-path {
+    background: #ffffff12;
+}
+
+
+/* ========================================
+   48. REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .customer {
+        transition: none;
+    }
+
+    .customer.walking .customer-character,
+    .customer.walking .customer-leg,
+    .customer.walking .customer-arm {
+        animation: none;
+    }
+}
+
+/* ========================================
+   41. IMPROVED QUEUE MOVEMENT
+======================================== */
+
+.customer-queue {
+    position: relative;
+}
+
+.customer {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    width: calc(100% / 6);
+    transition: left 0.55s ease-in-out;
+    will-change: left;
+}
+
+
+/* ========================================
+   42. WALKING ANIMATION
+======================================== */
+
+.customer-leg,
+.customer-arm {
+    transform-origin: top center;
+}
+
+.customer.walking .customer-leg.left-leg {
+    animation: walk-left 0.3s linear infinite;
+}
+
+.customer.walking .customer-leg.right-leg {
+    animation: walk-right 0.3s linear infinite;
+}
+
+.customer.walking .customer-arm.left-arm {
+    animation: walk-right 0.3s linear infinite;
+}
+
+.customer.walking .customer-arm.right-arm {
+    animation: walk-left 0.3s linear infinite;
+}
+
+.customer.walking .customer-character {
+    animation: walking-bounce 0.3s linear infinite;
+}
+
+@keyframes walk-left {
+    0%, 100% {
+        transform: rotate(-18deg);
+    }
+
+    50% {
+        transform: rotate(18deg);
+    }
+}
+
+@keyframes walk-right {
+    0%, 100% {
+        transform: rotate(18deg);
+    }
+
+    50% {
+        transform: rotate(-18deg);
+    }
+}
+
+@keyframes walking-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+
+/* ========================================
+   43. FRONT CUSTOMER HIGHLIGHT
+======================================== */
+
+.customer.is-front .order-bubble {
+    border-color: #779b50;
+    box-shadow: 0 0 0 3px #779b5035;
+}
+
+.customer.is-front .customer-number {
+    background: #52764b;
+    color: #fff0cb;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+
+/* ========================================
+   44. SERVED CUSTOMER ANIMATION
+======================================== */
+
+.customer.departing {
+    pointer-events: none;
+    z-index: 5;
+}
+
+.customer.served {
+    animation: happy-customer 0.4s ease forwards;
+}
+
+@keyframes happy-customer {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-35px);
+    }
+}
+
+
+/* ========================================
+   45. ANGRY CUSTOMER ANIMATION
+======================================== */
+
+.customer.leaving {
+    animation: angry-customer 0.4s ease forwards;
+}
+
+@keyframes angry-customer {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+.customer.angry .order-bubble {
+    border-color: #bd5146;
+    background: #ffe0d3;
+}
+
+.customer.angry .customer-mouth {
+    height: 12%;
+    background: #793d30;
+}
+
+
+/* ========================================
+   46. IMPROVED FOOD BUTTONS
+======================================== */
+
+.food-icon {
+    display: grid;
+    place-items: center;
+    width: clamp(36px, 5vw, 60px);
+    aspect-ratio: 1;
+    background: #fff3d6;
+    border: 2px solid #c6b38b;
+    border-radius: 50%;
+    box-shadow: 0 3px #b6a27c;
+}
+
+.food-btn:not(:disabled):hover .food-icon {
+    transform: scale(1.08);
+}
+
+.food-icon {
+    transition: transform 0.2s ease;
+}
+
+.food-btn.correct {
+    background: #a9cd85;
+    border-color: #668e46;
+}
+
+.food-btn.incorrect {
+    background: #d69b8b;
+    border-color: #a65243;
+}
+
+
+/* ========================================
+   47. ENVIRONMENT IMPROVEMENTS
+======================================== */
+
+.canteen-area {
+    box-shadow:
+        inset 0 0 35px #63472f25,
+        0 4px #142119;
+}
+
+.counter-front {
+    box-shadow: inset 0 -8px #63472f35;
+}
+
+.door-window {
+    box-shadow: inset 3px 3px #ffffff40;
+}
+
+.queue-path {
+    background: #ffffff12;
+}
+
+
+/* ========================================
+   48. REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .customer {
+        transition: none;
+    }
+
+    .customer.walking .customer-character,
+    .customer.walking .customer-leg,
+    .customer.walking .customer-arm {
+        animation: none;
+    }
+}
